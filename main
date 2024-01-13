@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cpp-telegram-bot/telegram_bot.h>
+
+void handleIncomingMessage(const TgBot::Message::Ptr& message) {
+    // Gestisci qui il messaggio in arrivo
+    std::string responseText = "Ricevuto messaggio: " + message->text;
+    
+    // Invia una risposta al mittente
+    bot.getApi().sendMessage(message->chat->id, responseText);
+}
+
+int main() {
+    TgBot::Bot bot("TOKEN_DEL_TUO_BOT");
+
+    // Imposta la funzione di gestione per i messaggi in arrivo
+    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+        handleIncomingMessage(message);
+    });
+
+    // Avvia il bot
+    try {
+        bot.getApi().deleteWebhook();
+        TgBot::TgLongPoll longPoll(bot);
+        while (true) {
+            longPoll.start();
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Errore: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
