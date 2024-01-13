@@ -10,7 +10,7 @@ void handleIncomingMessage(const TgBot::Message::Ptr& message) {
 }
 
 int main() {
-    TgBot::Bot bot("TOKEN_DEL_TUO_BOT");
+    TgBot::Bot bot(6986158221:AAFYcxtALGjMRd_-YAsplOiIExtpjawJ1HU);
 
     // Imposta la funzione di gestione per i messaggi in arrivo
     bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
